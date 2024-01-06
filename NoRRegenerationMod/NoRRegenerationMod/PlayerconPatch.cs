@@ -1,6 +1,8 @@
-﻿using NoRregeneration;
+﻿using System;
+using HarmonyLib;
+using UnityEngine;
 
-namespace NoRRegeneration
+namespace NoRregeneration
 {
 
     internal class PlayerConPatch
@@ -14,6 +16,8 @@ namespace NoRRegeneration
             Plugin.mPlayercon = __instance;
         }
 
+        // Better get raped than death!
+        // Press down button + action button
         [global::HarmonyLib.HarmonyPatch(typeof(global::playercon), "CreampieKakidasu")]
         [global::HarmonyLib.HarmonyPostfix]
         private static void ManualEroDown(global::playercon __instance, PlayerStatus ___playerstatus, ref float ___key_vertical,

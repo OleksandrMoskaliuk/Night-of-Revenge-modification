@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using HarmonyLib;
+using UnityEngine;
 
 namespace NoRregeneration
 {
@@ -15,7 +17,9 @@ namespace NoRregeneration
                 "(BirthCount/10 * RegenerationMultiplier) + " +
                  "(RapeCount/100 * RegenerationMultiplier) + " +
                   "(TotalCumVolume/1000 * RegenerationMultiplier) + ");
-            global::HarmonyLib.Harmony.CreateAndPatchAll(typeof(global::NoRRegeneration.PlayerConPatch), null);
+            global::HarmonyLib.Harmony.CreateAndPatchAll(typeof(global::NoRregeneration.PlayerConPatch), null);
+            global::HarmonyLib.Harmony.CreateAndPatchAll(typeof(global::NoRregeneration.PlayerStatusPatch), null);
+
             Plugin.LoggerMessage01 = "[Twitter @Dru9Dealer] Regeneration mod enable";
         }
 
@@ -29,7 +33,7 @@ namespace NoRregeneration
                 float RapeCount = (float)mPlayerstaus.RapeCount / 100f;
                 float TotalCumVolume = mPlayerstaus.NakadashiValue / 1000f;
                 float TotalRegenSource = BirthCount + RapeCount + TotalCumVolume + Level;
-                float RegenerationStrength = RegenerationFromSource(TotalRegenSource);
+                RegenerationBuff = RegenerationFromSource(TotalRegenSource);
 
                 bool PassiveRegenCondition = !mPlayercon.Attacknow && !mPlayercon.Actstate
                     && !mPlayercon.stepfrag && !mPlayercon.magicnow
@@ -37,7 +41,7 @@ namespace NoRregeneration
                 // Health and pleasure regeneration
                 if (mPlayerstaus.Hp < mPlayerstaus.AllMaxHP() && PassiveRegenCondition)
                 {
-                    mPlayerstaus.Hp += mPlayerstaus.AllMaxHP() * RegenerationStrength * Time.deltaTime;
+                    mPlayerstaus.Hp += mPlayerstaus.AllMaxHP() * RegenerationBuff * Time.deltaTime;
                     if (mPlayerstaus.Hp < 0f)
                     {
                         mPlayerstaus.Hp = 0f;
@@ -48,7 +52,7 @@ namespace NoRregeneration
                     bool IsStaminaFull = mPlayerstaus.Sp >= mPlayerstaus.AllMaxSP() * 0.99;
                     if (mPlayerstaus._BadstatusVal[0] > 0 && IsStaminaFull && PassiveRegenCondition)
                     {
-                        float PleasureRegenerate = 100 * RegenerationStrength * Time.deltaTime;
+                        float PleasureRegenerate = 100 * RegenerationBuff * Time.deltaTime;
                         mPlayerstaus._BadstatusVal[0] -= PleasureRegenerate;
                         if (mPlayerstaus._BadstatusVal[0] < 0f)
                         {
@@ -59,7 +63,7 @@ namespace NoRregeneration
                 // Stamina and mana regeneration
                 if (mPlayerstaus.Sp < mPlayerstaus.AllMaxSP() && PassiveRegenCondition)
                 {
-                    mPlayerstaus.Sp += mPlayerstaus.AllMaxSP() * RegenerationStrength * Time.deltaTime;
+                    mPlayerstaus.Sp += mPlayerstaus.AllMaxSP() * RegenerationBuff * Time.deltaTime;
                     if (mPlayerstaus.Sp < 0f)
                     {
                         mPlayerstaus.Sp = 0f;
@@ -70,8 +74,8 @@ namespace NoRregeneration
                 {
                     if (mPlayerstaus.Mp < mPlayerstaus.AllMaxMP() && PassiveRegenCondition)
                     {
-                        float ManaRegen = mPlayerstaus.AllMaxMP() * RegenerationStrength * Time.deltaTime;
-                        float SpRegen = mPlayerstaus.AllMaxSP() * RegenerationStrength * Time.deltaTime;
+                        float ManaRegen = mPlayerstaus.AllMaxMP() * RegenerationBuff * Time.deltaTime;
+                        float SpRegen = mPlayerstaus.AllMaxSP() * RegenerationBuff * Time.deltaTime;
                         mPlayerstaus.Mp += ManaRegen + SpRegen; 
 
                         if (mPlayerstaus.Mp < 0f)
@@ -130,6 +134,7 @@ namespace NoRregeneration
 
             mPlayercon = null;
             mPlayerstaus = null;
+            RegenerationBuff = 1;
         }
 
         public static BepInEx.Configuration.ConfigEntry<float> RegenerationMultiplier;
@@ -138,6 +143,7 @@ namespace NoRregeneration
 
         public static playercon mPlayercon = null;
         public static PlayerStatus mPlayerstaus = null;
+        public static float RegenerationBuff;
 
         // Logger 01
         public static string LoggerMessage01;

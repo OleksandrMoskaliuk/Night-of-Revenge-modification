@@ -32,9 +32,10 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PlayerStatusPatch.cs" />
     <Compile Include="PlayerconPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegeneraionPlugin.cs" />
+    <Compile Include="Plugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
