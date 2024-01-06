@@ -34,7 +34,7 @@ namespace NoRregeneration
                 bool PassiveRegenCondition = !mPlayercon.Attacknow && !mPlayercon.Actstate
                     && !mPlayercon.stepfrag && !mPlayercon.magicnow
                     && global::UnityEngine.Time.timeScale != 0f;
-
+                // Health and pleasure regeneration
                 if (mPlayerstaus.Hp < mPlayerstaus.AllMaxHP() && PassiveRegenCondition)
                 {
                     mPlayerstaus.Hp += mPlayerstaus.AllMaxHP() * RegenerationStrength * Time.deltaTime;
@@ -43,7 +43,20 @@ namespace NoRregeneration
                         mPlayerstaus.Hp = 0f;
                     }
                 }
-
+                else  // Regenerete pleasure only when Hp full
+                {
+                    bool IsStaminaFull = mPlayerstaus.Sp >= mPlayerstaus.AllMaxSP() * 0.99;
+                    if (mPlayerstaus._BadstatusVal[0] > 0 && IsStaminaFull && PassiveRegenCondition)
+                    {
+                        float PleasureRegenerate = 100 * RegenerationStrength * Time.deltaTime;
+                        mPlayerstaus._BadstatusVal[0] -= PleasureRegenerate;
+                        if (mPlayerstaus._BadstatusVal[0] < 0f)
+                        {
+                            mPlayerstaus._BadstatusVal[0] = 0f;
+                        }
+                    }
+                }
+                // Stamina and mana regeneration
                 if (mPlayerstaus.Sp < mPlayerstaus.AllMaxSP() && PassiveRegenCondition)
                 {
                     mPlayerstaus.Sp += mPlayerstaus.AllMaxSP() * RegenerationStrength * Time.deltaTime;
@@ -53,24 +66,18 @@ namespace NoRregeneration
 
                     }
                 }
-
-                if (mPlayerstaus.Mp < mPlayerstaus.AllMaxMP() && PassiveRegenCondition)
+                else // Regenerete mana only if sp full
                 {
-                    mPlayerstaus.Mp += mPlayerstaus.AllMaxMP() * RegenerationStrength * Time.deltaTime;
-
-                    if (mPlayerstaus.Mp < 0f)
+                    if (mPlayerstaus.Mp < mPlayerstaus.AllMaxMP() && PassiveRegenCondition)
                     {
-                        mPlayerstaus.Mp = 0f;
-                    }
-                }
+                        float ManaRegen = mPlayerstaus.AllMaxMP() * RegenerationStrength * Time.deltaTime;
+                        float SpRegen = mPlayerstaus.AllMaxSP() * RegenerationStrength * Time.deltaTime;
+                        mPlayerstaus.Mp += ManaRegen + SpRegen; 
 
-                if (mPlayerstaus._BadstatusVal[0] > 0 && PassiveRegenCondition)
-                {
-                    mPlayerstaus._BadstatusVal[0] -= 100 * RegenerationStrength * Time.deltaTime;
-
-                    if (mPlayerstaus._BadstatusVal[0] < 0f)
-                    {
-                        mPlayerstaus._BadstatusVal[0] = 0f;
+                        if (mPlayerstaus.Mp < 0f)
+                        {
+                            mPlayerstaus.Mp = 0f;
+                        }
                     }
                 }
                

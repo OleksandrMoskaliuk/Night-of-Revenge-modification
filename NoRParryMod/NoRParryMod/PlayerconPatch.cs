@@ -17,7 +17,6 @@ namespace NoRParryMod
              bool ___magicnow, bool ___Itemuse, bool ___Death, ref bool ___Parry,
              ref float ___parrycount, ref float ___guradcount, float ___key_vertical)
         {
-            // int stepkind = Traverse.Create(__instance).Field("stepkind").GetValue<int>();
             if (___Parry)
             {
                 if (___key_guard && !___Attacknow && ___stepkind == 0 && !___nowdamage && !___magicnow && ___playerstatus._SOUSA && !___Itemuse && !___Death)
@@ -64,6 +63,49 @@ namespace NoRParryMod
             }
 
         }
+
+
+        // Rest attack when guard button is pressedd, prefix patch function
+        [global::HarmonyLib.HarmonyPatch(typeof(global::playercon), "guard_fun")]
+        [global::HarmonyLib.HarmonyPrefix]
+        public static void ResetAttackOnGuard(global::playercon __instance, global::PlayerStatus ___playerstatus,
+             bool ___key_guard, bool ___Attacknow, int ___stepkind, bool ___nowdamage,
+             bool ___magicnow, bool ___Itemuse, bool ___Death, ref bool ___Parry,
+             ref float ___parrycount, ref float ___guradcount, float ___key_vertical)
+        {
+            // Immidietely skip attack while guard is pressed
+            if (___key_guard && ___Attacknow && ___stepkind == 0 && !___nowdamage && !___magicnow && ___playerstatus._SOUSA && !___Itemuse && !___Death)
+            {
+                __instance.Actstate = false;
+                __instance.Atkcount = 0;
+                __instance.Attacknow = false;
+                __instance.Atkcombo = 0;
+                __instance.tough = __instance.maxtough;
+            }
+
+        }
+
+        // Fast skip magic cast
+        [global::HarmonyLib.HarmonyPatch(typeof(global::playercon), "magicdata_fun")]
+        [global::HarmonyLib.HarmonyPostfix]
+        public static void SkipMagickCastOnGuard(global::playercon __instance, global::PlayerStatus ___playerstatus,
+             bool ___key_guard, bool ___Attacknow, int ___stepkind, bool ___nowdamage,
+             bool ___magicnow, bool ___Itemuse, bool ___Death, ref bool ___Parry,
+             ref float ___parrycount, ref float ___guradcount, float ___key_vertical, ref bool ___magicfire , ref float ___mgcount , ref int ___magicdatanum,
+             ref GameObject ___MagicSpellCanvas)
+        {
+            if (___key_guard)
+            {
+                ___MagicSpellCanvas.SetActive(false);
+                __instance.magicnow = false;
+                __instance.Actstate = false;
+                ___magicfire = false;
+                ___mgcount = 0f;
+                __instance.tough = __instance.maxtough;
+                ___playerstatus.PleasureParalysisActionPercentage();
+            }
+        }
+
 
         // Token: 0x06000012 RID: 18 RVA: 0x00002073 File Offset: 0x00000273
         public PlayerConPatch()

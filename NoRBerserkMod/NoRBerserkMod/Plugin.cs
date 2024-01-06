@@ -26,19 +26,6 @@ namespace NoRBerserkMod
             if (mPlayerstatus != null && mPlayercon != null)
             {
                 float LostHp = 1 - (mPlayerstatus.Hp / mPlayerstatus.AllMaxHP());
-                if (mPlayerstatus._BadstatusVal[0] > 0)
-                {
-                    if (mPlayer == null)
-                    {
-                        Rewired.Player player = Rewired.ReInput.players.GetPlayer(mPlayercon.playerId);
-                        mPlayer = global::Rewired.ReInput.players.GetPlayer(mPlayercon.playerId);
-                    }
-                    mPlayerstatus._BadstatusVal[0] -= (mPlayerstatus.Sp * 0.1f) * UnityEngine.Mathf.Lerp(0.1f, Plugin.PleasureSkipMult.Value, LostHp) * Time.deltaTime;
-                    if (mPlayerstatus._BadstatusVal[0] < 0)
-                    {
-                        mPlayerstatus._BadstatusVal[0] = 0;
-                    }
-                }
                 if (mPlayerstatus.Sp < mPlayerstatus.AllMaxSP() && !mPlayerstatus && !mPlayerstatus && !mPlayerstatus && !mPlayerstatus && Time.timeScale != 0f)
                 {
                     if (!mPlayercon.guard)

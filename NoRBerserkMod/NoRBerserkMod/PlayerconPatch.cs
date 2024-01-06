@@ -33,7 +33,7 @@ namespace NoRBerserkMod
         {
             // Increase damage resist on low hp
             float LostHp =  1 - (___playerstatus.Hp / ___playerstatus.AllMaxHP());
-            getatk *= global::UnityEngine.Mathf.Lerp(1f, (1f / Plugin.DamageResistMult.Value), LostHp);
+            getatk /= global::UnityEngine.Mathf.Lerp(1f, (1f / Plugin.DamageResistMult.Value), LostHp);
         }
     }
 
