@@ -58,7 +58,7 @@ namespace NoREliteEnemies
                 {
                     ___JPname += "<ELITE>";
                     float Lv = Plugin.mPlayerstaus.LV;
-                    float HpMulti = UnityEngine.Random.Range(1f, 1f + (Lv / 10f * Plugin.EliteHPMult.Value));
+                    float HpMulti = UnityEngine.Random.Range(1f, 1f + (Lv *  0.05f * Plugin.EliteHPMult.Value));
                     __instance.Hp = __instance.MaxHp *= HpMulti;
                     __instance.Exp = global::UnityEngine.Mathf.RoundToInt(__instance.Exp * HpMulti * Plugin.EliteXpMult.Value);
                     global::UnityEngine.Color color;
