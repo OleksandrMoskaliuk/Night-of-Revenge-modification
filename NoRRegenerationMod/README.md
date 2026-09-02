@@ -1,4 +1,21 @@
+# NoR Regeneration Mod
 
+A BepInEx plugin for **Night of Revenge** that grants passive HP, MP, SP, and pleasure status regeneration based on player level, birth count, rape count, and total cum volume.
+
+---
+
+## Features
+
+- **Dynamic Passive Regeneration**: Regenerates HP, SP, MP, and reduces bad status (pleasure) passively during out-of-combat/idle states.
+- **Scaling Sources**: Regeneration rate dynamically scales based on:
+  - Player Level
+  - Harami / Birth Count
+  - Rape Count
+  - Total Cum Volume (`NakadashiValue`)
+- **Exponential Curve**: Formula utilizes logarithmic and power scaling so regeneration grows as the heroine overcomes difficult encounters.
+- **Configurable Multiplier**: Easily scale overall regeneration strength via the configuration file.
+
+---
 
 ## Prerequisites
 
@@ -10,12 +27,16 @@
 
 1. Download and install **BepInEx v5.4.23.5 (x86)** into your game directory.
 2. Run the game once to allow BepInEx to generate its folder structure.
-3. Place `NoRParryMod.dll` into the `BepInEx/plugins` directory.
+3. Place `NoRregeneration.dll` into the `BepInEx/plugins` directory.
 
 ---
 
 ## Configuration
 
-After launching the game once with the mod installed, a configuration file named `NoRParryMod.cfg` will be generated in `BepInEx/config/`.
+After launching the game once with the mod installed, a configuration file named `NoRregeneration.cfg` will be generated in `BepInEx/config/`.
 
-Open this file in any text editor to customize your block and parry thresholds and timing settings.
+### Config Options
+
+| Setting | Default | Description |
+| :--- | :--- | :--- |
+| **RegenerationMultiplier** | `1.0` | Global multiplier affecting regeneration scaling from all sources (Level, Birth Count, Rape Count, Cum Volume). |
