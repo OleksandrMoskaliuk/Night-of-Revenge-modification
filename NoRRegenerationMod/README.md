@@ -6,6 +6,12 @@ A BepInEx plugin for **Night of Revenge** that grants dynamic passive regenerati
 
 ## Features
 
+**Dynamic Passive Regeneration**: Regenerates HP, SP, MP, and reduces bad status (pleasure) passively.
+- **Scaling Sources**: Regeneration rate dynamically scales based on:
+  - Player Level
+  - Harami / Birth Count
+  - Rape Count
+  - Total Cum Volume (`NakadashiValue`)
 - **Conditional Passive Regeneration**: Active only when idle (not attacking, casting magic, stepping, or acting).
 - **Resource Priority & Dependencies**:
   - **HP & Pleasure**: HP regenerates first when depleted. Once HP is full, regeneration shifts to reducing Pleasure (`_BadstatusVal[0]`) provided SP is at least 99% full.
