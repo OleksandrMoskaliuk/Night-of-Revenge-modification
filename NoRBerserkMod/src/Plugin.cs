@@ -8,12 +8,12 @@ namespace NoRBerserkMod
     {
         private void Awake()
         {
-            Plugin.DashMult = base.Config.Bind<float>("Dash", "DashMult", 1.4f, "Dash distance on low hp multiplier");
-            Plugin.DamageMult = base.Config.Bind<float>("Damage", "DamageMult", 2f, "Damege multiplier at low hp");
-            Plugin.AtkSpeedMult = base.Config.Bind<float>("Speed", "AtkSpeedMult", 2f, "Speed multiplier at low hp");
-            Plugin.DamageResistMult = base.Config.Bind<float>("Resistance", "DamageResistMult", 2f, "Increase resist damage when hp low");
-            Plugin.PleasureSkipMult = base.Config.Bind<float>("Pleasure", "PleasureSkipMult", 2.5f, "On hit skip this much more pleasure when at low hp");
-            Plugin.SpRegenMult = base.Config.Bind<float>("Stamina", "SpRegenMult", 2f, "Regenerate this much more sp when on low sp");
+            Plugin.DashMult = base.Config.Bind<float>("Dash", "DashMult", 1.4f, "Multiplier for dash distance, which scales linearly from 1.0 at full health to 1.4 at 0% health");
+            Plugin.DamageMult = base.Config.Bind<float>("Damage", "DamageMult", 2f, "Multiplier for damage dealt, which scales linearly from 1.0 at full health to 2.0 at 0% health");
+            Plugin.AtkSpeedMult = base.Config.Bind<float>("Speed", "AtkSpeedMult", 2f, "Multiplier for attack speed, which scales linearly from 1.0 at full health to 2.0 at 0% health");
+            Plugin.DamageResistMult = base.Config.Bind<float>("Resistance", "DamageResistMult", 2f, "Multiplier to increase resistance to damage, which scales linearly from 1.0 at full health to 2.0 at 0% health");
+            Plugin.PleasureSkipMult = base.Config.Bind<float>("Pleasure", "PleasureSkipMult", 2.5f, "Multiplier for pleasure reduction on hit, which scales linearly from 1.0 at full health to 2.5 at 0% health");
+            Plugin.SpRegenMult = base.Config.Bind<float>("Stamina", "SpRegenMult", 2f, "Multiplier for SP regeneration, which scales linearly from 1.0 at normal stamina to 2.0 at low stamina");
             Log = base.Logger;
             global::HarmonyLib.Harmony.CreateAndPatchAll(typeof(global::NoRBerserkMod.EnemyDatePatch), null);
             global::HarmonyLib.Harmony.CreateAndPatchAll(typeof(global::NoRBerserkMod.PlayerConPatch), null);
