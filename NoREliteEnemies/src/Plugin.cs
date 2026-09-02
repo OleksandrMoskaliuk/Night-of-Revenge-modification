@@ -5,7 +5,7 @@ namespace NoREliteEnemies
 {
     [global::BepInEx.BepInPlugin("NoREliteEnemiesMod", "[twitter @Dru9Dealer] NoR_EEnemiesMod", "1.0.0")]
     [global::BepInEx.BepInProcess("NightofRevenge.exe")]
-    public class Plugin : global::BepInEx.BaseUnityPlugin
+    public class Plugin : global::BepInEx.BaseUnityPlugin 
     {
         private void Awake()
         {
