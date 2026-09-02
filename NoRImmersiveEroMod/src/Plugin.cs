@@ -67,7 +67,7 @@ namespace NoRImmersiveEroMod
             // Logger 01            
             if (LogDat1.TimeRamained > 0)
             {
-                global::UnityEngine.GUI.Box(LogDat1.rectangle, "Log 01: " + LoggerMessage01);
+                global::UnityEngine.GUI.Box(LogDat1.rectangle, LoggerMessage01);
                 LogDat1.LastMessage = LoggerMessage01;
                 LogDat1.TimeRamained -= UnityEngine.Time.deltaTime;
             }
