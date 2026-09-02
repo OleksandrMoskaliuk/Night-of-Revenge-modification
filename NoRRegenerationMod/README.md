@@ -35,11 +35,11 @@ private float RegenerationFromSource(float source)
 
 ### 2. SP and MP Regeneration Rules
 * **SP Regeneration**: When current SP is below maximum, SP recovers over time scaled by total max SP, $Buff$, and delta time.
-* **MP Overflow Condition**: MP will **only** regenerate once SP is fully capped ($\text{SP} \ge \text{MaxSP}$). When active, MP receives both Mana and additional Stamina-equivalent recovery speed.
+* **MP Overflow Condition**: MP will **only** regenerate once SP is fully capped. When active, MP receives both Mana and additional Stamina-equivalent recovery speed.
 
 ### 3. HP and Pleasure Regeneration Rules
 * **HP Regeneration**: Restores health continuously until reaching maximum HP.
-* **Pleasure Reduction Condition**: Pleasure status reduces **only** when HP is 100% full **AND** SP is at $\ge 99\%$ capacity.
+* **Pleasure Reduction Condition**: Pleasure status reduces **only** when HP is 100% full **AND** SP is at 99% capacity.
 
 ---
 
