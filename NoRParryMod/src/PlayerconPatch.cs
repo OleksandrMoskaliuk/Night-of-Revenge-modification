@@ -10,7 +10,7 @@ namespace NoRParryMod
         // will execute after guard_fun original function
         // Perry will reset block time
         // On bad timing parry get perfect block instead damage 
-        [global::HarmonyLib.HarmonyPatch(typeof(global::playercon), "guard_fun")]
+        [global::HarmonyLib.HarmonyPatch(typeof(global::playercon), "guard_fun")] 
         [global::HarmonyLib.HarmonyPostfix]
         public static void NoResetGuardOnParry(global::playercon __instance, global::PlayerStatus ___playerstatus,
              bool ___key_guard, bool ___Attacknow, int ___stepkind, bool ___nowdamage,
@@ -33,7 +33,7 @@ namespace NoRParryMod
                                 ___guradcount = 0f;
                             }
                         }
-                        if (__instance.justguard < ___playerstatus._GuardCutTime + 0.2f)
+                        if (__instance.justguard < ___playerstatus._GuardCutTime + 0.6f)
                         {
                             __instance.justguard += global::UnityEngine.Time.deltaTime / 2f;
                         }
