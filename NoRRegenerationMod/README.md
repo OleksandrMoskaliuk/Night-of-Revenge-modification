@@ -1,19 +1,39 @@
 # NoR Regeneration Mod
 
-A BepInEx plugin for **Night of Revenge** that grants passive HP, MP, SP, and pleasure status regeneration based on player level, birth count, rape count, and total cum volume.
+A BepInEx plugin for **Night of Revenge** that grants dynamic passive regeneration for HP, MP, SP, and Pleasure status based on character stats and encounter metrics.
 
 ---
 
 ## Features
 
-- **Dynamic Passive Regeneration**: Regenerates HP, SP, MP, and reduces bad status (pleasure) passively during out-of-combat/idle states.
-- **Scaling Sources**: Regeneration rate dynamically scales based on:
-  - Player Level
-  - Harami / Birth Count
-  - Rape Count
-  - Total Cum Volume (`NakadashiValue`)
-- **Exponential Curve**: Formula utilizes logarithmic and power scaling so regeneration grows as the heroine overcomes difficult encounters.
-- **Configurable Multiplier**: Easily scale overall regeneration strength via the configuration file.
+- **Conditional Passive Regeneration**: Active only when idle (not attacking, casting magic, stepping, or acting).
+- **Resource Priority & Dependencies**:
+  - **HP & Pleasure**: HP regenerates first when depleted. Once HP is full, regeneration shifts to reducing Pleasure (`_BadstatusVal[0]`) provided SP is at least 99% full.
+  - **SP & MP**: SP regenerates continuously when below max. Once SP reaches full capacity, remaining regeneration overflows into MP (granting both Mana and Stamina regen bonuses).
+- **Mathematical Scaling**: Formula uses a custom logarithmic and square-root growth curve based on player level and experience metrics.
+- **Configurable Multiplier**: Global multiplier to scale regeneration rate across all sources.
+
+---
+
+## Detailed Mechanics
+
+### 1. Regeneration Formula (`RegenerationFromSource`)
+The base regeneration buff value is calculated using the following mathematical function based on total source metrics:
+
+private float RegenerationFromSource(float source)
+        {
+            float Regeneration = (float)(0.2f * global::System.Math.Log(0.2 * source + 1.0) *
+                (1.0 * global::System.Math.Pow(source, 0.5) + 2.71828182846f) + -1.9 * global::System.Math.Pow(1.0, source) + 1.9) / 25f;
+            return Regeneration;
+        }
+
+### 2. SP and MP Regeneration Rules
+* **SP Regeneration**: When current SP is below maximum, SP recovers over time scaled by total max SP, $Buff$, and delta time.
+* **MP Overflow Condition**: MP will **only** regenerate once SP is fully capped ($\text{SP} \ge \text{MaxSP}$). When active, MP receives both Mana and additional Stamina-equivalent recovery speed.
+
+### 3. HP and Pleasure Regeneration Rules
+* **HP Regeneration**: Restores health continuously until reaching maximum HP.
+* **Pleasure Reduction Condition**: Pleasure status reduces **only** when HP is 100% full **AND** SP is at $\ge 99\%$ capacity.
 
 ---
 
@@ -39,4 +59,4 @@ After launching the game once with the mod installed, a configuration file named
 
 | Setting | Default | Description |
 | :--- | :--- | :--- |
-| **RegenerationMultiplier** | `1.0` | Global multiplier affecting regeneration scaling from all sources (Level, Birth Count, Rape Count, Cum Volume). |
+| **RegenerationMultiplier** | `1.0` | Global scaling factor applied across all regeneration sources. |
