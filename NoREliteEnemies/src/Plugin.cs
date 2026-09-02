@@ -11,10 +11,10 @@ namespace NoREliteEnemies
         {
             Log = base.Logger;
             // Enemies
-            EliteSpawnChance = base.Config.Bind<float>("Enemies", "EliteSpawnChance", 1f, "Chance for an enemy to spawn as an elite from 0 to 1");
-            EliteHPMult = base.Config.Bind<float>("Enemies", "EliteHPMult", 1f, "Enemies have random Hp multiplier from 1 + (PlayerLEvel / 10) to 1 + (PlayerLEvel / 10 * HPMultiplier)");
-            EliteXpMult = base.Config.Bind<float>("Enemies", "EliteXpMult", 1f, "Elites have their EXP multiplied by this value");
-            EliteColor = base.Config.Bind<string>("Enemies", "Color", "#ffffff", "Elites cab be tinted this color (#550055), by default color is transparent");
+            Plugin.EliteSpawnChance = base.Config.Bind("EliteM enemigos", "EliteSpawnChance", 0.2f, "Chance for an enemy to spawn as an elite, ranging from zero (never) to one (always).");
+            Plugin.EliteHPMult = base.Config.Bind<float>("Enemies", "EliteHPMult", 1f, "Enemies have random Hp multiplier from 1 + (PlayerLEvel / 10) to 1 + (PlayerLEvel / 10 * HPMultiplier)");
+            Plugin.EliteXpMult = base.Config.Bind("EliteM enemigos", "EliteXpMult", 1.5f, "Multiplier for experience rewards gained from defeating elite enemies, on top of their base values.");
+            Plugin.EliteColor = base.Config.Bind<string>("Enemies", "Color", "#ffffff", "Elites cab be tinted this color (#550055), by default color is transparent");
             // Patching
             global::HarmonyLib.Harmony.CreateAndPatchAll(typeof(NoREliteEnemies.PlayerConPatch), null);
             global::HarmonyLib.Harmony.CreateAndPatchAll(typeof(NoREliteEnemies.EnemyDatePatch), null);
