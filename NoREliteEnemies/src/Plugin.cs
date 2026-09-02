@@ -12,7 +12,7 @@ namespace NoREliteEnemies
             Log = base.Logger;
             // Enemies
             Plugin.EliteSpawnChance = base.Config.Bind("EliteM enemigos", "EliteSpawnChance", 0.2f, "Chance for an enemy to spawn as an elite, ranging from zero (never) to one (always).");
-            Plugin.EliteHPMult = base.Config.Bind<float>("Enemies", "EliteHPMult", 1f, "Enemies have random Hp multiplier from 1 + (PlayerLEvel / 10) to 1 + (PlayerLEvel / 10 * HPMultiplier)");
+            Plugin.EliteHPMult = base.Config.Bind<float>("Enemies", "EliteHPMult", 1f, "Controls the maximum health boost elites receive, scaling dynamically with the player's level and the multiplier value.");
             Plugin.EliteXpMult = base.Config.Bind("EliteM enemigos", "EliteXpMult", 1.5f, "Multiplier for experience rewards gained from defeating elite enemies, on top of their base values.");
             Plugin.EliteColor = base.Config.Bind<string>("Enemies", "Color", "#ffffff", "Elites cab be tinted this color (#550055), by default color is transparent");
             // Patching
